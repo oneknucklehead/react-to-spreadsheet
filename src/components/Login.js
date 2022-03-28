@@ -1,6 +1,16 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import {
+  Button,
+  Card,
+  Dropdown,
+  DropdownButton,
+  Form,
+  FormControl,
+  InputGroup,
+  ListGroup,
+  Spinner,
+} from 'react-bootstrap'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 const Login = () => {
   const statesList = [
@@ -70,21 +80,13 @@ const Login = () => {
         })
     }
   }
-  //   const selectStates=(e)=>{
-  //       statesList.filter(return statesList.indexOf()>-1)
-  //     setState(e.target.value)
-  //   }
-  const changeState = (val) => {
-    setState(val)
-    const dropdown = document.getElementsByClassName('dropdown')
-    console.log(dropdown)
-  }
+
   return (
     <div>
       {showLogin ? (
         <GoogleLogin
           clientId={clientId}
-          buttonText='Login'
+          buttonText='Login to access the functionality '
           onSuccess={loginSuccess}
           onFailure={loginFailure}
           cookiePolicy={'single_host_origin'}
@@ -92,77 +94,86 @@ const Login = () => {
       ) : null}
       {showLogout ? (
         <>
-          <div>Hello {loginDetails.givenName}, Nice to meet you!</div>
-          <Form onSubmit={formSubmitHandler}>
-            <Form.Group className='mb-3' controlId='Age'>
-              <Form.Label>Age</Form.Label>
-              <Form.Control
-                type='number'
-                placeholder='Enter Your Age'
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-              {formErrors.ageErrorState && (
-                <Form.Text style={{ color: 'red' }}>
-                  {formErrors.ageError}
-                </Form.Text>
-              )}
-            </Form.Group>
+          <div className='container'>
+            <Card>
+              <Card.Title>
+                Hello {loginDetails.givenName}, Nice to meet you!
+              </Card.Title>
 
-            <Form.Group className='mb-3' controlId='Gender'>
-              <Form.Label>Gender</Form.Label>
-              <Form.Select
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              >
-                <option>Click on the dropdown to select</option>
-                <option value='male'>Male</option>
-                <option value='female'>Female</option>
-              </Form.Select>
-            </Form.Group>
+              <Form onSubmit={formSubmitHandler}>
+                <Form.Group className='mb-3' controlId='Age'>
+                  <Form.Label>Age:</Form.Label>
+                  <Form.Control
+                    type='number'
+                    placeholder='Enter Your Age'
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  />
+                  {formErrors.ageErrorState && (
+                    <Form.Text style={{ color: 'red' }}>
+                      {formErrors.ageError}
+                    </Form.Text>
+                  )}
+                </Form.Group>
 
-            <div>
-              <Form.Control
-                type='text'
-                placeholder='State of Residence'
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              />
-              {statesList
-                .filter((val) => {
-                  if (state == '') return val
-                  else if (val.toLowerCase().includes(state.toLowerCase()))
-                    return val
-                })
-                .map((val, key) => {
-                  return (
-                    <div className='dropdown' key={key}>
-                      <p
-                        className='dropdownItem'
-                        onClick={() => {
-                          setState(val)
-                          const dropdown =
-                            document.getElementsByClassName('dropdown')
-                          console.log(dropdown)
-                          dropdown[0].style.display = 'none'
-                        }}
-                      >
-                        {val}
-                      </p>
-                    </div>
-                  )
-                })}
-            </div>
+                <Form.Group className='mb-3' controlId='Gender'>
+                  <Form.Label>Gender:</Form.Label>
+                  <Form.Select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option>Click on the dropdown to select</option>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                  </Form.Select>
+                </Form.Group>
 
-            <Button variant='primary' type='submit'>
-              Submit
-            </Button>
-          </Form>
-          <GoogleLogout
-            clientId={clientId}
-            buttonText='Logout'
-            onLogoutSuccess={logoutSuccess}
-          ></GoogleLogout>
+                <div>
+                  <Form.Label>State:</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='State of Residence'
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                  <div className='dropdown'>
+                    {statesList
+                      .filter((val) => {
+                        if (state == '') return val
+                        else if (
+                          val.toLowerCase().includes(state.toLowerCase())
+                        )
+                          return val
+                      })
+                      .map((val, key) => {
+                        return (
+                          <p
+                            key={key}
+                            className='dropdownItem'
+                            onClick={() => {
+                              setState(val)
+                              const dropdown =
+                                document.getElementsByClassName('dropdown')
+                              dropdown[0].style.display = 'none'
+                            }}
+                          >
+                            {val}
+                          </p>
+                        )
+                      })}
+                  </div>
+                </div>
+                <Button variant='primary' type='submit'>
+                  Submit
+                </Button>
+              </Form>
+              <GoogleLogout
+                clientId={clientId}
+                buttonText='Logout'
+                onLogoutSuccess={logoutSuccess}
+              ></GoogleLogout>
+            </Card>
+          </div>
         </>
       ) : null}
     </div>
