@@ -24,8 +24,7 @@ const Login = () => {
     ageErrorState: false,
     ageError: '',
   })
-  const clientId =
-    '897828852205-isjv1j0a9gh1otrid5c73dvs1hnfv46b.apps.googleusercontent.com'
+  const clientId = `${process.env.REACT_APP_CLIENT_ID}`
 
   const loginSuccess = (res) => {
     console.log('Login successful', res.profileObj)
@@ -60,14 +59,12 @@ const Login = () => {
         gender: gender,
         state: state,
       }
-      axios
-        .post(`https://sheetdb.io/api/v1/jcmfvgeqsyqk3`, data)
-        .then((res) => {
-          console.log(res)
-          setAge(0)
-          setGender('')
-          setState('')
-        })
+      axios.post(`${process.env.REACT_APP_SHEET_LINK}`, data).then((res) => {
+        console.log(res)
+        setAge(0)
+        setGender('')
+        setState('')
+      })
     }
   }
 
