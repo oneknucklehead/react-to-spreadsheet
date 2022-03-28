@@ -1,16 +1,6 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import {
-  Button,
-  Card,
-  Dropdown,
-  DropdownButton,
-  Form,
-  FormControl,
-  InputGroup,
-  ListGroup,
-  Spinner,
-} from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Button, Card, Form } from 'react-bootstrap'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 const Login = () => {
   const statesList = [
